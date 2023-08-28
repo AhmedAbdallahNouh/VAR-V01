@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_VarLayout";
+}
+@model OrderItemDetails
+
+<div class="item" id="item-div" style="margin-top: 4rem; margin-bottom: 1rem;">
+    <div><button class="btn btn-primary" id="add-item">Add Item</button></div>
+</div>
+<div class="row" id="display-items"></div>
+<div id="cart-items"></div>
+
+<partial name="_InvoiceModal" ></partial>
+
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/js/Order.js"></script>
+    @*<script src="/js/ReservePlaystationRoom.js"></script>*@
+     <script src="/js/Item.js"></script>
+
+}

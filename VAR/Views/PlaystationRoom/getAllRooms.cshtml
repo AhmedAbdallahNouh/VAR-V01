@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+        Layout = "_VarLayout";
+
+}
+
+@model List<Playstation>
+
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Playstation Rooms</h2>
+        </div>
+        <div class="row">
+            @foreach(var item in Model)
+            {
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <!-- Portfolio item -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" asp-action="getRoomById" asp-controller="PlaystationRoom" asp-route-id=@item.Id target="_blank">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            @switch (item.RoomName)
+                            {
+                                case "Liverpool":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/liverpool.png" alt="..." />
+                                    break;
+                                case "Paris Saint-Germain":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/PSG.png" alt="..." />
+                                    break;
+                                case "Manchester United":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/manchester.jpg" alt="..." />
+                                    break;
+                                case "Barcelona":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/Barcelona.jpg" alt="..." />
+                                    break;
+                                case "Bayern Munich":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/BayernMunich.png" alt="..." />
+                                    break;
+                                case "Dortmund":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/bvb.png" alt="..." />
+                                    break;
+                                case "Real Madrid":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/RMA.png" alt="..." />
+                                    break;
+                                case "Juventus":
+                                    <img class="img-fluid" src="~/assets/img/Yassin/Juventus.jpg" alt="..." />
+                                    break;                                                                                           
+                            }
+                        </a>
+                    <div class="portfolio-caption"> 
+                        <div class="portfolio-caption-heading" style=" font-size: 1.2rem;color: #cca000;" >@item.RoomName</div>
+                        @*colr #cca000*@
+                    </div>
+                </div>
+            </div>
+            <!-- Portfolio item end-->
+
+            }
+         
+
+        </div>
+    </div>
+</section>
+
+

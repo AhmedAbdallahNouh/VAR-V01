@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+        Layout = "_AdimnLayout";
+}
+@model Order
+
+@if (Model.StartTime != null && Model.OrderItemDetails.Count == 0)
+{
+    <h3 class="mb-3" style="text-align: center;">
+        Just Gaming Order
+    </h3>
+}
+else if (@Model.StartTime != null && Model.OrderItemDetails.Count != 0)
+{
+    <h3 class="mb-3" style="text-align: center;">Gamin And Items Order</h3>
+}
+else
+{
+    <h3 class="mb-3" style="text-align: center;">Just Items Order</h3>
+}
+
+@*show table if Gaming And Items Order or just gamin order*@
+@if(Model.playstationID != null)
+{
+    <table class="table table-secondary text-center" style="color: black;" id="orders-table">
+        <thead>
+            <tr>
+                <th>StartTime</th>
+                <th>EndTime</th>
+                <th>Admin Name</th>
+                <th>Playstation Room</th>
+                <th>Discount</th>
+                <th>Gaming Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>      
+                 <td>@Model.StartTime</td>                 
+                 <td>@Model.EndTime</td>               
+                 <td>@Model.Admin.Name</td>             
+                 <td>@Model.Playstation.RoomName</td>
+                 <td>@Model.Discount</td>
+                 <td>@Model.TotalPrice</td>
+            </tr>
+
+        </tbody>
+    </table>
+}
+
+@if (Model.OrderItemDetails.Count != 0)
+{
+    <table class="table table-secondary text-center" style="color: black;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>              
+            </tr>
+        </thead>
+        <tbody id="items-order-table">
+            @foreach (var OrderItemDetail in Model.OrderItemDetails)
+            {
+                <tr>
+                    <td>@OrderItemDetail.Item.Name</td>
+                    <td>@OrderItemDetail.Item.Type</td>
+                    <td>@OrderItemDetail.Item.Price</td>
+                    <td>@OrderItemDetail.Quantity</td>
+                    <td>@OrderItemDetail.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts{
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/js/ReservePlaystationRoom.js"></script>
+    <script src="/js/Item.js"></script>*@
+    <script src="/js/GetOrderById.js"></script>
+
+
+}
