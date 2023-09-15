@@ -32,8 +32,8 @@ deleteBtn.addEventListener("click", function () {
             const canceltBtn = document.getElementById("cancel");
             canceltBtn.click();
             console.log(result);
-            window.location.href = "http://localhost:5208/Item/getAllItems";
-            //window.location.href = "http://localhost:5000/Item/getAllItems";
+            //window.location.href = "http://localhost:5208/Item/getAllItems";
+            window.location.href = "http://localhost:5000/Item/getAllItems";
             //window.location.href = "http://localhost:32719/Item/getAllItems";
 
         }

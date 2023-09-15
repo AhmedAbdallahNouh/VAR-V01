@@ -24,6 +24,12 @@ namespace VAR.Controllers
         {
             return View();
         }
+
+        public IActionResult GetLocalHost()
+        {
+            var builder = WebApplication.CreateBuilder();    
+            return Json(builder.Configuration.GetConnectionString("localHost"));
+        }
         public IActionResult Spinner()
         {
             return PartialView("_Spinner");
@@ -66,13 +72,16 @@ namespace VAR.Controllers
                         {
 
                             AllowRefresh = true,
-                            IsPersistent = false,
+                            IsPersistent = true,
                             ExpiresUtc = DateTime.UtcNow.AddHours(9)
+                           
                         };
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity),properties);
-                        HttpContext.Response.Cookies.Append("AdminId", claims[1].Value);
+                        CookieOptions cookieOptions = new CookieOptions();
+                        cookieOptions.Expires = DateTime.UtcNow.AddHours(9); // Set the expiration time to now + 9 hours
+                        HttpContext.Response.Cookies.Append("AdminId", claims[1].Value,cookieOptions);
                         return RedirectToAction("Index", "Home");
 
                     }

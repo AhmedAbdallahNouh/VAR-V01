@@ -257,7 +257,7 @@ function handleSpecificTimeRadioClick() {
     specificTimeDiv.classList.remove("d-none");
     specificTimeDiv.classList.add("d-flex");
     stopBtn.style = "display : none";
-    startAndStopBtnsDiv.style.marginLeft = "487px";
+    startAndStopBtnsDiv.style.marginLeft = "555px";
     startBtn.style.width = "22%";
     localStorage.setItem(`Time Radio For Room (${playstationRoomId})`, "specific");
 }
@@ -624,13 +624,28 @@ async function confirmOrder()
                 console.error(error);
             }
 
+            //update item in stock in data base
+            try {
+                const response = await fetch(`/Item/UpdateItemStock/${itemId}?newInStock=${parseInt(ItemQuantityCell)}`);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result1);
+
+                } else {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
 
     }
     deleteLocalStorageForThisRoomAfetrOrderConfirming();
-    window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
-    window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
+    //window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
+    //window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
 
-    //window.location.href = "http://localhost:5000/PlaystationRoom/getallrooms";
+    window.location.href = "http://localhost:5000/PlaystationRoom/getallrooms";
 
 }

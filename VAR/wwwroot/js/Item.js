@@ -1,5 +1,4 @@
 ﻿var PageSection = document.getElementById("services");
-PageSection.style = "background-image: url(../assets/img/Yassin/Coffe3.jpg); background-position: center; background-size: cover;background-repeat: no-repeat; margin-top: 5rem;";
     
 
 var inputNumber = document.getElementById("number");
@@ -150,7 +149,7 @@ addItemBttn.addEventListener("click", () => {
         inputNumber.max = localStorage.getItem(`${selectedItem.name} CurrentInStock`) == null ? selectedItem.inStock : localStorage.getItem(`${selectedItem.name} CurrentInStock`);
         console.log("block");
 
-     };
+     }
 
     var itemsCartPrice = document.getElementById("items-cart-price");
     var partialElement = document.getElementById("partial");

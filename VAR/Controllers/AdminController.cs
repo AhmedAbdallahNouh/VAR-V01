@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VAR.Models;
 using VAR.Repositries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VAR.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IAdminRepo adminRepo;

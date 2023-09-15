@@ -175,8 +175,8 @@ claerFilterBtn.addEventListener("click", function () {
     RoomNameSelect.value = "";   
     AdminNameSelect.value = "";
     deleteLocalStorageAfetrClearFilter();
-    window.location.href = `http://localhost:5208/Order/getOrdersPagination/?page=${1}&size=10`;
-    //window.location.href = `http://localhost:5000/Order/getOrdersPagination/?page=${1}&size=10`;
+    //window.location.href = `http://localhost:5208/Order/getOrdersPagination/?page=${1}&size=10`;
+    window.location.href = `http://localhost:5000/Order/getOrdersPagination/?page=${1}&size=10`;
 
 });
 
@@ -304,8 +304,8 @@ pageLinks.forEach(function (pageLink) {
             console.log("filtered pagination");
             ApplyFilterBtn.click();
         } else {
-            //window.location.href = `http://localhost:5000/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
-            window.location.href = `http://localhost:5208/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
+            window.location.href = `http://localhost:5000/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
+            //window.location.href = `http://localhost:5208/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
         }
 
 

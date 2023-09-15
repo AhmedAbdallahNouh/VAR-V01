@@ -222,8 +222,8 @@ async function confirmOrder() {
 
     }
     deleteLocalStorageAfetrItemsOrderConfirming();
-    window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
-    //window.location.href = "http://localhost:5000/PlaystationRoom/getallrooms";
+    //window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
+    window.location.href = "http://localhost:5000/PlaystationRoom/getallrooms";
 
 
 }

@@ -24,6 +24,18 @@ else
 @*show table if Gaming And Items Order or just gamin order*@
 @if(Model.playstationID != null)
 {
+    <input hidden id="all-order-total-price-input"  value="@Model.TotalPrice" />
+    <input hidden id="discount-input" value="@Model.Discount" />
+    <div class="row mb-4">
+        <div class="col-6" id="all-order-total-price-div">
+           Order Totala Price After Discount : @Model.TotalPrice E.P
+        </div>
+        <div class="col-6" id="discount-div">
+            Discount :  @Model.Discount E.P
+        </div>
+    </div>
+    
+
     <table class="table table-secondary text-center" style="color: black;" id="orders-table">
         <thead>
             <tr>
@@ -31,7 +43,6 @@ else
                 <th>EndTime</th>
                 <th>Admin Name</th>
                 <th>Playstation Room</th>
-                <th>Discount</th>
                 <th>Gaming Total Price</th>
             </tr>
         </thead>
@@ -41,8 +52,7 @@ else
                  <td>@Model.EndTime</td>               
                  <td>@Model.Admin.Name</td>             
                  <td>@Model.Playstation.RoomName</td>
-                 <td>@Model.Discount</td>
-                 <td>@Model.TotalPrice</td>
+                 <td id="gaming-total-price-cell"></td>
             </tr>
 
         </tbody>

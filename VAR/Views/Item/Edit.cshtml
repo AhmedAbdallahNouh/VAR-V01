@@ -21,5 +21,17 @@
     <label asp-for="InStock"></label>
     <input asp-for="InStock" value="@Model.InStock" />
 
-    <button id="submit-edit-item" type="submit">Save</button>
+    <button id="submit-edit-item" type="submit" onclick="UpdateCurrentInStockInLocalStorage()">Save</button>
 </form>
+
+<script>
+    function UpdateCurrentInStockInLocalStorage()
+    {
+        const itemName = document.getElementById("Name");
+        const itemInStock = document.getElementById("InStock");
+        console.log("fromInlinesCRIPT");
+        if (localStorage.getItem(`${itemName.value} CurrentInStock`) != null) 
+            localStorage.setItem(`${itemName.value} CurrentInStock`, itemInStock.value);
+    }
+    
+</script>

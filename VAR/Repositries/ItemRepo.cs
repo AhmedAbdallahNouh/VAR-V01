@@ -27,11 +27,21 @@ namespace VAR.Repositries
         {
             return await dbContext.Items.SingleOrDefaultAsync(i => i.Name == name);
         }
+        
         public async Task<Item?> Add(Item item)
         {
             await dbContext.Items.AddAsync(item);
             await dbContext.SaveChangesAsync();
             return item;
+        }
+
+        public void UpdateItemStock(int itemID ,int newInStock)
+        {
+            var item = getById(itemID);
+            item.Result.InStock -= newInStock;
+            dbContext.Items.Update(item.Result);
+            dbContext.SaveChanges();
+            
         }
         public async Task<Item?> edit(Item item)
         {

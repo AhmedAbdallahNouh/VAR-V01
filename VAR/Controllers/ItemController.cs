@@ -55,6 +55,11 @@ namespace VAR.Controllers
             return View();
 
         }
+        public void UpdateItemStock(int id, int newInStock)
+        {
+            itemRepo.UpdateItemStock(id, newInStock);
+          
+        }
 
         public async Task<IActionResult> Edit(int id)
         {

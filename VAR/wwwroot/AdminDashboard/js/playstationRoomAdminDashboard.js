@@ -33,8 +33,8 @@ deleteBtn.addEventListener("click", function () {
             canceltBtn.click();
             console.log(result);
             //window.location.href = "http://localhost:32719/playstationroom/getAllRoomsforadmin";
-            window.location.href = "http://localhost:5208/playstationroom/getAllRoomsforadmin";
-            //window.location.href = "http://localhost:5000/playstationroom/getAllRoomsforadmin";
+            //window.location.href = "http://localhost:5208/playstationroom/getAllRoomsforadmin";
+            window.location.href = "http://localhost:5000/playstationroom/getAllRoomsforadmin";
 
 
         }

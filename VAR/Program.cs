@@ -9,7 +9,9 @@ namespace VAR
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -27,7 +29,7 @@ namespace VAR
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromHours(9);
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
             });
 
@@ -36,13 +38,29 @@ namespace VAR
                 {
                     option.LoginPath = "/Account/Login";
                     option.ExpireTimeSpan = TimeSpan.FromHours(9);
-                    option.Cookie.HttpOnly = true;
+                    option.Cookie.HttpOnly = false;
                     option.Cookie.IsEssential = true;
                 });
 
            
 
             var app = builder.Build();
+            // Update the database if it is not updated
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var dbContext = services.GetRequiredService<VarDbContext>();
+                    dbContext.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    // Handle any errors that occur during database migration
+                    // You can log the error or perform any other actions here
+                    Console.WriteLine("An error occurred while applying database migrations: " + ex.Message);
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

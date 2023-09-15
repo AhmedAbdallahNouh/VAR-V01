@@ -11,5 +11,6 @@ namespace VAR.Repositries
         Task<List<Item>> getAllInStock();
         Task<Item?> getById(int id);
         Task<Item?> getByName(string name);
+        void UpdateItemStock(int itemID, int newInStock);
     }
 }
