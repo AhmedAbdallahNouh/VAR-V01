@@ -11501,4 +11501,35 @@ button.stop {
 
 .fa-solid .fa-play, .fa-solid .fa-stop {
     margin-right: 3px;
-} 
+}
+
+.image-overlay {
+    position: relative;
+    display: inline-block;
+}
+
+.top-left-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    /*background-color: rgb(245 4 4 / 11%);*/
+    background-color: rgb(245 4 4 / 11%);
+    color: #fff;
+    padding: 5px;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+/*position: absolute;
+top: 10px;
+left: 10px;
+background-color: #d70e0e;
+box-shadow: darkblue;
+color: #fff;
+padding: 5px;
+font-size: 14px;
+width: 16px;
+height: 16px;
+border-radius: 50%;*/

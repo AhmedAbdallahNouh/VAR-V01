@@ -29,21 +29,23 @@ function handleStopBtnClick() {
     clearInterval(timerIntervalId);
     startBtn.disabled = true;
     stopBtn.disabled = true;
+    document.getElementsByClassName("fa-stop")[0].style = "color = #dc3545;";
+    stopBtn.style = "background-color: #fff; border-color: #dc3545 !important; border: solid 0.5px;color: #dc3545;";
 
-    if (localStorage.getItem(`Time Radio For Room (${playstationRoomId})`) == "specific") {
-        timeDiffInHours = parseInt(specificTimeHourInput.value);
-        timeDiffInMinutes = parseInt(specificTimeMinuteInput.value);
-        startTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
-        stopTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
-        stopTime.setHours(stopTime.getHours() + parseInt(specificTimeHourInput.value));
-        stopTime.setMinutes(stopTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
-        localStorage.setItem(`stop time for room (${playstationRoomId})`, stopTime);
 
-    }
-    else {
-        var time1 = new Date("Sat Aug 12 2023 17:00:41 GMT+0300");
-        var time2 = new Date("Sat Aug 12 2023 18:45:41 GMT+0300");
 
+    //if (localStorage.getItem(`Time Radio For Room (${playstationRoomId})`) == "specific") {
+    //    timeDiffInHours = parseInt(specificTimeHourInput.value);
+    //    timeDiffInMinutes = parseInt(specificTimeMinuteInput.value);
+    //    startTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
+    //    stopTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
+    //    stopTime.setHours(stopTime.getHours() + parseInt(specificTimeHourInput.value));
+    //    stopTime.setMinutes(stopTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
+    //    localStorage.setItem(`stop time for room (${playstationRoomId})`, stopTime);
+
+    //}
+    //else {
+      
         if (localStorage.getItem(`start time for room (${playstationRoomId})`) !== null) {
             startTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
             console.log(`startTime FROM IF : ${startTime}`);
@@ -61,7 +63,7 @@ function handleStopBtnClick() {
         // Convert milliseconds to hours and minutes
         timeDiffInHours = Math.floor(timeDiff / (1000 * 60 * 60));
         timeDiffInMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    }
+    //}
 
     playstationRoomTotalPrice = singlePlayerRadio.checked ? Math.round(((timeDiffInMinutes / 60) + timeDiffInHours) * singlePriceForHour)
         : Math.round(((timeDiffInMinutes / 60) + timeDiffInHours) * multiPriceForHour);
@@ -92,28 +94,45 @@ var specificStartTime;
 function timer() {
 
 
+    if (localStorage.getItem(`Time Radio For Room (${playstationRoomId})`) == "specific") {
+        specificStartTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
+        specificEndTime = specificStartTime;
+        specificEndTime.setHours(specificStartTime.getHours() + parseInt(specificTimeHourInput.value));
+        specificEndTime.setMinutes(specificStartTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
+        console.log("end", specificEndTime);
+        var nowDate = new Date();
+        console.log("New Date", new Date());
 
-    specificStartTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
+        if (nowDate > specificEndTime) {
+            console.log("from if");
+            timerSecond.innerHTML = `00`;
+            timerMinute.innerHTML = `${specificTimeMinuteInput.value}`;
+            //timerMinute.innerHTML = `20`;
+            timerHour.innerHTML = `${specificTimeHourInput.value}`;
+            handleStopBtnClick();
+        }
+        else {
 
-    //console.log(new Date(localStorage.getItem(`start time for room (${playstationRoomId})`)));
-    //console.log("start",specificStartTime);   
-    specificEndTime = specificStartTime;
-    specificEndTime.setHours(specificStartTime.getHours() + parseInt(specificTimeHourInput.value));
-    specificEndTime.setMinutes(specificStartTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
-    console.log("end", specificEndTime);   
-    var nowDate = new Date();
-    console.log("New Date", new Date());   
+            if (second != 59) {
+                timerSecond.innerHTML = `${++second}`;
+            }
+            else {
+                second = 0;
+                timerSecond.innerHTML = `${second}`;
 
-    if ( nowDate > specificEndTime ) {
-        console.log("from if");
-        timerSecond.innerHTML = `00`;
-        timerMinute.innerHTML = `${specificTimeMinuteInput.value}`;
-        //timerMinute.innerHTML = `20`;
-        timerHour.innerHTML = `${specificTimeHourInput.value}`;
-        handleStopBtnClick();
-    }
-    else
-    {
+                if (minute != 59) {
+                    timerMinute.innerHTML = `${++minute}`;
+                }
+                else {
+                    minute = 0
+                    timerMinute.innerHTML = `${minute}`;
+                    timerHour.innerHTML = `${++hour}`;
+                }
+
+            }
+        }
+
+    } else {
 
         if (second != 59) {
             timerSecond.innerHTML = `${++second}`;
@@ -133,6 +152,48 @@ function timer() {
 
         }
     }
+
+
+    //specificStartTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
+
+    ////console.log(new Date(localStorage.getItem(`start time for room (${playstationRoomId})`)));
+    ////console.log("start",specificStartTime);   
+    //specificEndTime = specificStartTime;
+    //specificEndTime.setHours(specificStartTime.getHours() + parseInt(specificTimeHourInput.value));
+    //specificEndTime.setMinutes(specificStartTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
+    //console.log("end", specificEndTime);   
+    //var nowDate = new Date();
+    //console.log("New Date", new Date());   
+
+    //if ( nowDate > specificEndTime ) {
+    //    console.log("from if");
+    //    timerSecond.innerHTML = `00`;
+    //    timerMinute.innerHTML = `${specificTimeMinuteInput.value}`;
+    //    //timerMinute.innerHTML = `20`;
+    //    timerHour.innerHTML = `${specificTimeHourInput.value}`;
+    //    handleStopBtnClick();
+    //}
+    //else
+    //{
+
+    //    if (second != 59) {
+    //        timerSecond.innerHTML = `${++second}`;
+    //    }
+    //    else {
+    //        second = 0;
+    //        timerSecond.innerHTML = `${second}`;
+
+    //        if (minute != 59) {
+    //            timerMinute.innerHTML = `${++minute}`;
+    //        }
+    //        else {
+    //            minute = 0
+    //            timerMinute.innerHTML = `${minute}`;
+    //            timerHour.innerHTML = `${++hour}`;
+    //        }
+
+    //    }
+    //}
     
     localStorage.setItem(`Timer State For Room (${playstationRoomId})`, new Date().toString());
     localStorage.setItem(`Timer State Hour For Room (${playstationRoomId})`, hour);
@@ -192,10 +253,20 @@ if (roomStatusVariable !== null) {
     minute = parseInt(localStorage.getItem(`Timer State Minute For Room (${playstationRoomId})`));
     second = localStorage.getItem(`Timer State Second For Room (${playstationRoomId})`);
 
+    if (localStorage.getItem(`gaming mode for room (${playstationRoomId})`) == "single") {
+        MultiPlayerRadio.disabled = true
+    }
+    else {
+        singlePlayerRadio.disabled = true;
+        MultiPlayerRadio.checked = true;
+    }
+
     if (localStorage.getItem(`stop time for room (${playstationRoomId})`) != null && localStorage.getItem(`Time Radio For Room (${playstationRoomId})`) != "specific") {
         timerSecond.innerHTML = second;
         timerMinute.innerHTML = minute;
         timerHour.innerHTML = hour;
+        openTimeRadio.checked = true;
+        specificTimeRadio.disabled = true;
         handleStopBtnClick();
     }
     else {
@@ -230,15 +301,16 @@ if (roomStatusVariable !== null) {
         }
         else {
             updateTimerInnerHtml();
+            openTimeRadio.checked = true;
+            specificTimeRadio.disabled = true;
 
         }
-
         roomStatus.innerHTML = "Busy";
-        startBtn.disabled = true;
     }
    
 
-   
+    addStyleToStartBtnOnClick();
+
 
 }
 else if (!playstationRoomId) {
@@ -256,9 +328,9 @@ function handleSpecificTimeRadioClick() {
     //set value into ls to use it to stope timer counter at specific time
     specificTimeDiv.classList.remove("d-none");
     specificTimeDiv.classList.add("d-flex");
-    stopBtn.style = "display : none";
-    startAndStopBtnsDiv.style.marginLeft = "555px";
-    startBtn.style.width = "22%";
+    //stopBtn.style = "display : none";
+    //startAndStopBtnsDiv.style.marginLeft = "555px";
+    //startBtn.style.width = "22%";
     localStorage.setItem(`Time Radio For Room (${playstationRoomId})`, "specific");
 }
 specificTimeRadio.addEventListener("click", handleSpecificTimeRadioClick);
@@ -268,9 +340,9 @@ openTimeRadio.addEventListener("click", function () {
     specificTimeDiv.classList.remove("d-flex");
     specificTimeDiv.classList.add("d-none");
 
-    stopBtn.style = "display : block";
-    startAndStopBtnsDiv.style.marginLeft = "433px";
-    startBtn.style.width = "15%";
+    //stopBtn.style = "display : block";
+    //startAndStopBtnsDiv.style.marginLeft = "433px";
+    //startBtn.style.width = "15%";
 
     localStorage.setItem(`Time Radio For Room (${playstationRoomId})`, "open");
 
@@ -278,6 +350,11 @@ openTimeRadio.addEventListener("click", function () {
 
 var startTime;
 
+function addStyleToStartBtnOnClick() {
+    startBtn.disabled = true;
+    document.getElementsByClassName("fa-play")[0].style = "color = #198754;";
+    startBtn.style = "background-color: #fff; border-color: #198754!important; border: solid 0.5px;color: #198754;";
+}
 startBtn.addEventListener("click", () => {
 
     //specific time configuration
@@ -290,20 +367,28 @@ startBtn.addEventListener("click", () => {
         localStorage.setItem(`Specific Time For Room (${playstationRoomId})`, JSON.stringify(specifciTimeObj));
         openTimeRadio.disabled = true;
     }
-    else
-    {
+    else {
         specificTimeRadio.disabled = true;
-    }
-   
+        localStorage.setItem(`Time Radio For Room (${playstationRoomId})`, "open");
+    }      
+      
 
+
+    if (singlePlayerRadio.checked) {
+        localStorage.setItem(`gaming mode for room (${playstationRoomId})`, "single");
+        MultiPlayerRadio.disabled = true;
+    } else {
+        localStorage.setItem(`gaming mode for room (${playstationRoomId})`, "multi");
+        singlePlayerRadio.disabled = true;
+    }
 
     //import arrayOfItemsIDs from "./Item";
     console.log("from import", arrayOfItemsIDs);
     startTime = new Date();
 
     timerIntervalId = window.setInterval(timer, 1000);
- 
-    startBtn.disabled = true;  
+
+    addStyleToStartBtnOnClick();
     console.log(`startTime : ${startTime.toString()}`);
 
     localStorage.setItem(`start time for room (${playstationRoomId})`, startTime.toString());
@@ -356,6 +441,7 @@ var modalFooter = document.querySelector(".modal-footer");
 var orderTotalPriceValue;
 
 function showOrder() {
+    console.log("asdsad");
     discount.value = 0;
     var AllItemsTotalPrice = 0;
     var existingPsRoomTable ;
@@ -414,9 +500,14 @@ function showOrder() {
     
 
     orderTable = document.getElementById("order-table");
+    console.log("order table from show", orderTable);
     //var orderTableCopy = orderTable !== null ? orderTable.cloneNode(true) : null;
     if (orderTable != null) {
         var orderTableCopy = orderTable.cloneNode(true);
+
+        //update orderTableCopy and orderTableCopy boody id
+        orderTableCopy.id = "order-table-copy";
+        orderTableCopy.children[1].id = "table-copy-body";
 
         //iterate the table delete button cell to remove it from invoice
         for (let i = 1; i < orderTableCopy.rows.length; i++) {
@@ -471,11 +562,15 @@ function showOrder() {
 
     if (existingPsRoomTable == null && plastationRoomTable) modalBody.appendChild(plastationRoomTableCopy);
 
-    if (orderTableCopy != null) {
+    console.log("order table from befor if", orderTable);
+    if (orderTable != null) {
         if (existingOrderTable != null) {
             modalBody.removeChild(existingOrderTable);
         }
         modalBody.appendChild(orderTableCopy);
+    }
+    else {
+        modalBody.removeChild(existingOrderTable);
     }
    
     //check if already orderTotalPriceDiv is not exist

@@ -218,6 +218,22 @@ async function confirmOrder() {
                 console.error(error);
             }
 
+            //update item in stock in data base
+            try {
+                const response = await fetch(`/Item/UpdateItemStock/${itemId}?newInStock=${parseInt(ItemQuantityCell)}`);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result1);
+
+                } else {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
+
         }
 
     }

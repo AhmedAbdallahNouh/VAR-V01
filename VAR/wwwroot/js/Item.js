@@ -17,7 +17,8 @@ var itemsCart = document.getElementById("items-cart");
 var tableBody;
 // to delet item from iems table
 // Add event listener to table to listen for clicks on "Delete" buttons
-$('table').on('click', '.delete-item', function () {
+$('#order-table').on('click', '#delete-item', function () {
+    orderTable = document.getElementById("order-table");
      tableBody = document.getElementById("table-body");
 
     
@@ -50,12 +51,12 @@ $('table').on('click', '.delete-item', function () {
 
     // Delete closest row when "Delete" button is clicked
     row.remove();
-    
+
     // Check if table body has any rows left
-    if (tableBody.rows.length == 0) {
+    if (orderTable.children[1].rows.length == 0) {
         // If there are no more rows in the table body, delete the entire table
-        //$('table').remove();
         itemCart.innerHTML = "";
+
         console.log("lastrow");
 
     }
