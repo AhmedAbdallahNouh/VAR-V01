@@ -1,4 +1,41 @@
 ﻿
+
+var id;
+// Attach a click event listener to all delete buttons
+const deleteButtons = document.querySelectorAll('.btn-danger[data-bs-toggle="modal"]');
+deleteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Get the ID of the item to be deleted from the data-rowid attribute
+        const orderId = button.getAttribute('data-rowid');
+        console.log(orderId);
+        id = orderId;
+        console.log(id);
+
+    });
+});
+
+
+const deleteBtn = document.getElementById("confirm-delete-order");
+
+deleteBtn.addEventListener("click", function () {
+    $.ajax({
+        url: `/Order/Delete/${id}`,
+        type: 'POST',
+        success: function (result) {
+            // To close modal after confirm delete
+            const canceltBtn = document.getElementById("cancel");
+            canceltBtn.click();
+            console.log(result);
+            ////window.location.href = "http://localhost:32719/playstationroom/getAllRoomsforadmin";
+            ////window.location.href = "http://localhost:5208/playstationroom/getAllRoomsforadmin";
+            //window.location.href = "http://localhost:5000/playstationroom/getAllRoomsforadmin";
+
+
+        }
+    });
+});
+
+
 function deleteLocalStorageAfetrApplyFilter() {
     localStorage.setItem("active List","1");
 }
@@ -50,32 +87,6 @@ for (let i = 0; i < rows.length; i++) {
     const rowData = new TableRow(startTime, endTime, adminName, playstationRoom, description, totalPrice);
     data.push(rowData);
 }
-
-
-
-//console.log("original array", data);
-
-//const filteredDataByAdmin = data.filter(row => row.adminName === "Hazem");
-//console.log("fiterd array", filteredDataByAdmin);
-
-//const filteredDataByPlaystationRoom = data.filter(row => row.playstationRoom === "Liverpool");
-//console.log("fiterd array", filteredDataByPlaystationRoom);
-
-//const filteredDataByMonth = data.filter(row => row.startTime.split("/")[0] === "4" && row.startTime.split("/")[2].split(" ")[0] === "2023");
-//console.log("fiterd array by month", filteredDataByMonth);
-
-//const targetYear = '2023'
-//const filteredDataByYear = data.filter(row => {
-//    const startTime = row.startTime;
-//    if (startTime == 'ـــــ' ) {
-//        return false;
-//    }
-//    const year = startTime.split('/')[2].split(' ')[0];
-//    return year === targetYear;
-//});
-
-//console.log("fiterd array by year", filteredDataByYear);
-
 
 var allOrdersBtn = document.getElementById("all-orders");
 
@@ -180,19 +191,6 @@ claerFilterBtn.addEventListener("click", function () {
 
 });
 
-// get all orders by click the current active list from pagination list
-//allOrdersBtn.addEventListener("click", function () {
-//    currentActiveLi.click();
-//});
-
-//filterByRoomNameBtn.addEventListener("click", function () {
-//    filterBy(filteredDataByPlaystationRoom);
-//});
-
-//filterByAdminBtn.addEventListener("click", function () {
-//    filterBy(filteredDataByAdmin);
-//});
-
 
 // getting the pervious li
 var previousLi = document.getElementById('pervious-li');
@@ -223,11 +221,6 @@ if (currentActiveLiFromLocalStorage == null || currentActiveLiFromLocalStorage =
     console.log(currentActiveLi);
 
 }
-//var currentActiveLi = currentActiveLiFromLocalStorage == null ? pageLinks[1] : pageLinks[parseInt(currentActiveLiFromLocalStorage)];
-
-// in initailization page add active class to parent of first li with page number 1 
-
-
 
 pageLinks.forEach(function (pageLink) {
     pageLink.addEventListener('click',  function (event) {
@@ -260,9 +253,7 @@ pageLinks.forEach(function (pageLink) {
         if (activeLi)
         {
             console.log("active", activeLi);
-                //nextLi.classList.toggle('disabled', parentLi === beforeLastLi);
-                //previousLi.classList.toggle('disabled', parentLi.textContent === '1');
-                //activeLi.classList.remove('active');
+               
             activeLi.classList.remove('active');
 
             if (parentLi.childNodes[0].innerHTML != 1)

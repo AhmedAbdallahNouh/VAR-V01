@@ -3,7 +3,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    int index = 1;
+    double orderCafeTotalPrice = 0;  
+    foreach(var order in Model.Orders)
+    { 
+        orderCafeTotalPrice += order.OrderItemDetails.Sum(oid => oid.TotalPrice);
+    };
+    double orderGamingTotalPrice = Model.AllOrdersTotalPrice - orderCafeTotalPrice;
     Layout = "_AdimnLayout";
 }
 @model PaginationVM
@@ -50,7 +55,7 @@
 </div>
 
 <table class="table table-secondary text-center" style="color: black;" id="orders-table">
-    <thead>
+    <thead style="font-size: 13.38px;">
         <tr>
             <th>StartTime</th>
             <th>EndTime</th>
@@ -60,7 +65,7 @@
             <th>Total Price</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 14.9px;">
         @foreach (var item in Model.Orders)
         {
             <tr>
@@ -113,20 +118,29 @@
 
                 <td>@item.TotalPrice</td>
 
-                <td><a class="btn btn-warning" asp-action="getOrderById" asp-controller="Order" asp-route-id="@item.Id">Details</a></td>        
-
+                <td><a class="btn btn-warning" asp-action="getOrderById" asp-controller="Order" asp-route-id="@item.Id" style="padding-left: 5px; width: 50px; font-size: small; text-align: center;">Details</a></td>
+                <td>
+                    <button type="button" class="order-btn btn  btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-rowid="@item.Id" style="padding-left: 5px; width: 50px; font-size: small; text-align: center;">
+                        Delete
+                    </button>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
-@if(Model.Filter){
-<div class="row">
-    <div class="col-sm-12 col-md-7">
-      All Orders Total Price = @Model.AllOrdersTotalPrice 
+<div class="row mb-4 mt-4 justify-content-between">
+    <div class="col-4 col-sm-12 col-md-4">
+      All Orders Total Price = @Model.AllOrdersTotalPrice E.P
+    </div>
+    <div class="col-4 col-sm-12 col-md-4">
+      Gaming Total Price = @Model.OrderGamingTotalPrice E.P
+    </div>
+    <div class="col-4 col-sm-12 col-md-4">
+      Café Total Price = @Model.OrderCafeTotalPrice E.P
     </div>
 </div>
-}
+
 
 <div class="row justify-content-center">
     <div class="col-sm-12 col-md-4">
@@ -160,7 +174,7 @@
             </div>
             <div class="modal-footer">
                 <button  id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="confirm-delete-item"  type="button" class="btn btn-primary">Confirm</button>
+                <button id="confirm-delete-order"  type="button" class="btn btn-primary">Confirm</button>
             </div>
         </div>
     </div>

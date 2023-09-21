@@ -23,11 +23,20 @@ namespace VAR.Repositries
 
         public PaginationVM getOrdersPagination(int page, int size)
         {
+            var allOrders = dbContext.Orders.Include(o => o.Admin).Include(o => o.Playstation).Include(o => o.OrderItemDetails).OrderByDescending(o => o.StartTime).ToList();
+            var result = allOrders.Skip((page - 1) * size).Take(size).ToList();
+            //var result = (dbContext.Orders.Include(o => o.Admin).Include(o => o.Playstation).Include(o => o.OrderItemDetails)).OrderByDescending(o => o.StartTime).Skip((page - 1) * size).Take(size).ToList();
             var total = dbContext.Orders.Count();
             var pages = (int)Math.Ceiling((decimal)total / size);
 
-            var result = (dbContext.Orders.Include(o => o.Admin).Include(o => o.Playstation).Include(o => o.OrderItemDetails )).OrderByDescending(o => o.StartTime).Skip((page - 1) * size).Take(size).ToList();
-            PaginationVM paginationVM = new PaginationVM(total, pages, false, 0 , result);
+            var allOrdersTotalPrice = allOrders.Sum(o => o.TotalPrice);
+            double orderCafeTotalPrice = 0;
+            foreach (var order in allOrders)
+            {
+                orderCafeTotalPrice += order.OrderItemDetails.Sum(oid => oid.TotalPrice);
+            };
+            var orderGamingTotalPrice = allOrdersTotalPrice - orderCafeTotalPrice;
+            PaginationVM paginationVM = new PaginationVM(total, pages, false, allOrdersTotalPrice , result ,orderCafeTotalPrice , orderGamingTotalPrice);
             return paginationVM;
         }
         public PaginationVM GetFilteredOrdersPagination(FilteredOrdersPaginationVM filteredOrdersPaginationVM)
@@ -52,8 +61,13 @@ namespace VAR.Repositries
 
             var result = query.Skip((filteredOrdersPaginationVM.page - 1) * filteredOrdersPaginationVM.size).Take(filteredOrdersPaginationVM.size).ToList();
             var allOrdersTotalPrice = query.Sum(o => o.TotalPrice);
-
-            var paginationVM = new PaginationVM(total, pages, true, allOrdersTotalPrice, result);
+            double orderCafeTotalPrice = 0;
+            foreach (var order in query)
+            {
+                orderCafeTotalPrice += order.OrderItemDetails.Sum(oid => oid.TotalPrice);
+            };
+            var orderGamingTotalPrice = allOrdersTotalPrice - orderCafeTotalPrice;
+            var paginationVM = new PaginationVM(total, pages, true, allOrdersTotalPrice, result,orderCafeTotalPrice ,orderGamingTotalPrice);
             return paginationVM;
         }
         public async Task<Order?> getById(int id)

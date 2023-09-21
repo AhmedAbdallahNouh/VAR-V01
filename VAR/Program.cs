@@ -16,7 +16,7 @@ namespace VAR
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<VarDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("default")));
-
+           
             builder.Services.AddScoped<IAdminRepo, AdminRepo>(); //Ingect IAdminRepo
             builder.Services.AddScoped<IPlaystationRepo, PlaystationRepo>(); //Ingect IPlaystationRepo
             builder.Services.AddScoped<IAuthnticationRepo, AuthnticationRepo>(); //Ingect IAuthnticationRepo

@@ -25,7 +25,8 @@
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>*@
                             <div class="image-overlay">
-                                 <span class="top-left-text"></span>
+                                <span class="top-left-text"><i id="room-availabilty-icon" class="fa-solid fa-play" style="color: #cca000;"></i></span>
+
                                  @switch (item.RoomName)
                                  {
                                     case "Liverpool":
@@ -56,17 +57,17 @@
                                  }
                             </div>
                         </a>
-                    <div class="portfolio-caption"> 
-                        <div class="portfolio-caption-heading" style=" font-size: 1.2rem;color: #cca000;" >@item.RoomName</div>
-                        @*colr #cca000*@
+                    <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading" style=" font-size: 1.2rem;color: #cca000;">@item.RoomName</div>
+                            <h6 style="color: #cca000; font-family: 'Roboto Slab'; font-size:inherit;">ps @item.Version</h6>
+                       
                     </div>
                 </div>
             </div>
             <!-- Portfolio item end-->
 
             }
-         
-
+   
         </div>
     </div>
 </section>

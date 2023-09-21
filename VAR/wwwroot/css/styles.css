@@ -5176,7 +5176,7 @@ textarea.form-control-lg {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
 
-.toast {
+/*.toast {
   --bs-toast-zindex: 1090;
   --bs-toast-padding-x: 0.75rem;
   --bs-toast-padding-y: 0.5rem;
@@ -5242,7 +5242,7 @@ textarea.form-control-lg {
 .toast-body {
   padding: var(--bs-toast-padding-x);
   word-wrap: break-word;
-}
+}*/
 
 .modal {
   --bs-modal-zindex: 1055;
@@ -11510,17 +11510,31 @@ button.stop {
 
 .top-left-text {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    /*background-color: rgb(245 4 4 / 11%);*/
-    background-color: rgb(245 4 4 / 11%);
+    top: -10px;
+    left: 2px;
     color: #fff;
     padding: 5px;
     font-size: 14px;
-    width: 20px;
+    width: 2rem;
     height: 20px;
     border-radius: 50%;
+    font-size: xx-large;
 }
+
+
+/*#toastBox {
+    position: absolute;
+    top: -10px;
+    left: 2px;
+    color: #fff;
+    padding: 5px;
+    font-size: 14px;
+    width: 2rem;
+    height: 20px;
+    border-radius: 50%;
+    font-size: xx-large;
+}
+*/
 
 /*position: absolute;
 top: 10px;

@@ -1,11 +1,43 @@
 var playstationRoomId = window.location.pathname.split('/')[3];
 console.log(`URL : ${window.location.pathname.split('/')[3]}`);
+var playstationRoomTableBody = document.getElementById("playstation-room-tbody");
+var playstationRoomName = playstationRoomTableBody.rows[0].cells[0].innerText;
+const TitleName = document.querySelector("Title");
+const favIcon = document.querySelector("Link");
+favIcon.setAttribute("href","/assets/img/Yassin/Real Mardid Fav.png");
 
+switch (playstationRoomName) {
+    case "Liverpool":
+        favIcon.setAttribute("href", "/assets/img/Yassin/liverpool-fav.png");
+        break;
+    case "Paris Saint-Germain":
+        favIcon.setAttribute("href", "/assets/img/Yassin/paris-saint-germain-fav.png");
+        break;
+    case "Manchester United":
+        favIcon.setAttribute("href", "/assets/img/Yassin/Manchester_United-fav.png");
+        break;
+    case "Barcelona":
+        favIcon.setAttribute("href", "/assets/img/Yassin/barcelonaFavIcon.png");
+        break;
+    case "Bayern Munich":
+        favIcon.setAttribute("href", "/assets/img/Yassin/bayern-munchen-fav.png");
+        break;
+    case "Dortmund":
+        favIcon.setAttribute("href", "/assets/img/Yassin/bvb-fav.png");
+        break;
+    case "Real Madrid":
+        favIcon.setAttribute("href", "/assets/img/Yassin/realmadridFavIcon.png");
+        break;
+    case "Juventus":
+        favIcon.setAttribute("href", "/assets/img/Yassin/juventus-logo-fav.png");
+        break;
+    
+}
+//var x = url("/assets/img/Yassin/icons8-real-madrid-70.png") 
+TitleName.innerText = playstationRoomName;
 var roomStatusVariable = localStorage.getItem(`start time for room (${playstationRoomId})`);
 
 var openTimeRadio = document.getElementById("open-time-radio");
-var openTimeRadio = document.getElementById("open-time-radio");
-var specificTimeRadio = document.getElementById("specific-time-radio");
 
 
 var specificTimeRadio = document.getElementById("specific-time-radio");
@@ -17,13 +49,54 @@ var startAndStopBtnsDiv = document.getElementById("start-and-stop-div");
 var singlePlayerRadio = document.getElementById("singleRadio");
 var MultiPlayerRadio = document.getElementById("MultiRadio");
 var stopBtn = document.getElementById("stopBtn");
-var playstationRoomTableBody = document.getElementById("playstation-room-tbody");
+
 
 //get the single and multi price per hour of playstation room
 var singlePriceForHour = parseInt(playstationRoomTableBody.rows[0].cells[2].innerText);
 var multiPriceForHour = parseInt(playstationRoomTableBody.rows[0].cells[3].innerText);
 
 console.log(roomStatusVariable);
+//let toastBox = document.getElementById("toastBox");
+//let
+
+var toastPlaystationRooms = localStorage.getItem('toastPlaystationRooms') == null
+    ? [] : JSON.parse(localStorage.getItem('toastPlaystationRooms')) ;
+
+function showToast() {
+    toastr.success( playstationRoomName +" " + 'Room', 'Time Is Over', { timeOut: 900000 });
+    toastr.options.closeButton = true;
+    toastr.options.closeMethod = 'fadeOut';
+    toastr.options.closeDuration = 300;
+    toastr.options.closeEasing = 'swing';
+    toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
+    console.log("toast from reverse");
+}
+
+function addToPlaystationRooms(RoomName) {
+    // Check if an element with the same name already exists
+    var isDuplicate = toastPlaystationRooms.some(function (room) {
+        return room.name === RoomName;
+    });
+
+    if (!isDuplicate) {
+        // Create a new object and push it to the array
+        var newRoom = {
+            name: RoomName
+        };
+        toastPlaystationRooms.push(newRoom);
+        localStorage.setItem(`toastPlaystationRooms`, JSON.stringify(toastPlaystationRooms));
+    }
+}
+
+function updateToastPlaystationRooms() {
+    let toastPlaystationRoomsDeletedObjectIndex = toastPlaystationRooms.findIndex(item => item.name === playstationRoomName);
+
+    if (toastPlaystationRoomsDeletedObjectIndex !== -1) {
+        toastPlaystationRooms.splice(toastPlaystationRoomsDeletedObjectIndex, 1);
+
+        localStorage.setItem(`toastPlaystationRooms`, JSON.stringify(toastPlaystationRooms));
+    }
+}
 
 function handleStopBtnClick() {
     clearInterval(timerIntervalId);
@@ -31,21 +104,7 @@ function handleStopBtnClick() {
     stopBtn.disabled = true;
     document.getElementsByClassName("fa-stop")[0].style = "color = #dc3545;";
     stopBtn.style = "background-color: #fff; border-color: #dc3545 !important; border: solid 0.5px;color: #dc3545;";
-
-
-
-    //if (localStorage.getItem(`Time Radio For Room (${playstationRoomId})`) == "specific") {
-    //    timeDiffInHours = parseInt(specificTimeHourInput.value);
-    //    timeDiffInMinutes = parseInt(specificTimeMinuteInput.value);
-    //    startTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
-    //    stopTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
-    //    stopTime.setHours(stopTime.getHours() + parseInt(specificTimeHourInput.value));
-    //    stopTime.setMinutes(stopTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
-    //    localStorage.setItem(`stop time for room (${playstationRoomId})`, stopTime);
-
-    //}
-    //else {
-      
+    
         if (localStorage.getItem(`start time for room (${playstationRoomId})`) !== null) {
             startTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
             console.log(`startTime FROM IF : ${startTime}`);
@@ -83,7 +142,10 @@ function deleteLocalStorageForThisRoomAfetrOrderConfirming() {
     localStorage.removeItem(`arrayOfItemsNameAndItemsIdForRoom(${playstationRoomId})`);
     localStorage.removeItem(`stop time for room (${playstationRoomId})`);
 
+    
 }
+
+
 var second = 0;
 var minute = 0;
 var hour = 0;
@@ -110,6 +172,10 @@ function timer() {
             //timerMinute.innerHTML = `20`;
             timerHour.innerHTML = `${specificTimeHourInput.value}`;
             handleStopBtnClick();
+            showToast();
+            addToPlaystationRooms(playstationRoomName);
+           
+
         }
         else {
 
@@ -153,48 +219,6 @@ function timer() {
         }
     }
 
-
-    //specificStartTime = new Date(localStorage.getItem(`start time for room (${playstationRoomId})`));
-
-    ////console.log(new Date(localStorage.getItem(`start time for room (${playstationRoomId})`)));
-    ////console.log("start",specificStartTime);   
-    //specificEndTime = specificStartTime;
-    //specificEndTime.setHours(specificStartTime.getHours() + parseInt(specificTimeHourInput.value));
-    //specificEndTime.setMinutes(specificStartTime.getMinutes() + parseInt(specificTimeMinuteInput.value));
-    //console.log("end", specificEndTime);   
-    //var nowDate = new Date();
-    //console.log("New Date", new Date());   
-
-    //if ( nowDate > specificEndTime ) {
-    //    console.log("from if");
-    //    timerSecond.innerHTML = `00`;
-    //    timerMinute.innerHTML = `${specificTimeMinuteInput.value}`;
-    //    //timerMinute.innerHTML = `20`;
-    //    timerHour.innerHTML = `${specificTimeHourInput.value}`;
-    //    handleStopBtnClick();
-    //}
-    //else
-    //{
-
-    //    if (second != 59) {
-    //        timerSecond.innerHTML = `${++second}`;
-    //    }
-    //    else {
-    //        second = 0;
-    //        timerSecond.innerHTML = `${second}`;
-
-    //        if (minute != 59) {
-    //            timerMinute.innerHTML = `${++minute}`;
-    //        }
-    //        else {
-    //            minute = 0
-    //            timerMinute.innerHTML = `${minute}`;
-    //            timerHour.innerHTML = `${++hour}`;
-    //        }
-
-    //    }
-    //}
-    
     localStorage.setItem(`Timer State For Room (${playstationRoomId})`, new Date().toString());
     localStorage.setItem(`Timer State Hour For Room (${playstationRoomId})`, hour);
     localStorage.setItem(`Timer State Minute For Room (${playstationRoomId})`, minute);
@@ -738,6 +762,7 @@ async function confirmOrder()
 
     }
     deleteLocalStorageForThisRoomAfetrOrderConfirming();
+    updateToastPlaystationRooms();
     //window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
     //window.location.href = "http://localhost:5208/PlaystationRoom/getallrooms";
 

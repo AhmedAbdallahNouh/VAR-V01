@@ -12,8 +12,7 @@ namespace VAR.Controllers
         private readonly IPlaystationRepo playstationRepo;
         private readonly IAdminRepo adminRepo;
 
-
-        public OrderController(IOrderRepo orderRepo, IPlaystationRepo playstationRepo, IAdminRepo adminRepo)
+        public OrderController(IOrderRepo orderRepo, IPlaystationRepo playstationRepo, IAdminRepo adminRepo )
         {
             this.orderRepo = orderRepo;
             this.playstationRepo = playstationRepo;
@@ -93,6 +92,13 @@ namespace VAR.Controllers
             return Json(order);
             
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await orderRepo.delete(id);
+            return RedirectToAction("GetOrdersPagination");
+        }
 
+       
     }
 }
