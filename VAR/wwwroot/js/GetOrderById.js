@@ -2,7 +2,6 @@
 var allOrderTotalPriceInput = document.getElementById("all-order-total-price-input");
 var allOrderTotalPriceDiv = document.getElementById("all-order-total-price-div");
 var gamingTotalPriceCell = document.getElementById("gaming-total-price-cell");
-
 var allItemsTotalPrice = 0;
 for (let i = 0; i < itemsOrderTable.rows.length; i++) {
     allItemsTotalPrice += parseFloat(itemsOrderTable.rows[i].cells[4].textContent);
@@ -10,10 +9,8 @@ for (let i = 0; i < itemsOrderTable.rows.length; i++) {
 let discountInput = document.getElementById("discount-input");
 let discountDiv = document.getElementById("discount-div");
 let discountValue = parseFloat(discountInput.value);
-
 let gamingTotalPrice = (parseFloat(allOrderTotalPriceInput.value) + discountValue ) - allItemsTotalPrice ;
 gamingTotalPriceCell.innerHTML = gamingTotalPrice;
-
 //Create a new orderTableCopy row
 var itemsOrderTableCopyNewRow = document.createElement("tr");
 itemsOrderTableCopyNewRow.style.borderWidth = "3px 0 3px 0";
@@ -26,7 +23,6 @@ itemsOrderTableCopyAllTotalPriceCellHeader.textContent = "All Items Total Price"
 itemsOrderTableCopyAllTotalPriceCellHeader.style.fontWeight = "bolder";
 itemsOrderTableCopyAllTotalPriceCellHeader.style.padding = "5px 5px 5px 35px";
 itemsOrderTableCopyAllTotalPriceCellHeader.style.textAlign = "start";
-
 //Append the new orderTableCopy AllTotalPriceHeader cell to the new orderTableCopy row
 itemsOrderTableCopyNewRow.appendChild(itemsOrderTableCopyAllTotalPriceCellHeader);
 //Append the new orderTableCopy AllTotalPriceValue cell to the new orderTableCopy row

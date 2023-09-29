@@ -1,5 +1,4 @@
 ﻿
-
 var id;
 // Attach a click event listener to all delete buttons
 const deleteButtons = document.querySelectorAll('.btn-danger[data-bs-toggle="modal"]');
@@ -13,10 +12,7 @@ deleteButtons.forEach(button => {
 
     });
 });
-
-
 const deleteBtn = document.getElementById("confirm-delete-order");
-
 deleteBtn.addEventListener("click", function () {
     $.ajax({
         url: `/Order/Delete/${id}`,
@@ -35,7 +31,6 @@ deleteBtn.addEventListener("click", function () {
     });
 });
 
-
 function deleteLocalStorageAfetrApplyFilter() {
     localStorage.setItem("active List","1");
 }
@@ -48,10 +43,8 @@ function deleteLocalStorageAfetrClearFilter() {
     localStorage.removeItem("dateFromForFilteredOrderes");
     localStorage.removeItem("dateToForFilteredOrderes");
 }
-
 const noneExistingOrdersFilterAlert = document.getElementById("alert-div");
 //noneExistingOrdersFilterAlert[0].setAttribute("style", "display: none!important;");
-
 class TableRow {
     constructor(startTime, endTime, adminName, playstationRoom, description, totalPrice) {
         this.startTime = startTime;
@@ -62,20 +55,14 @@ class TableRow {
         this.totalPrice = totalPrice;
     }
 };
-
 // get the orders table data to aplly ordering (by : Month, year, adminID ,....) in it
 var table = document.getElementById("orders-table");
 console.log("table", table);
 var tbody = table.getElementsByTagName("tbody")[0];
 console.log("tbody", tbody);
-
 var rows = tbody.getElementsByTagName("tr");
 console.log("rows", rows);
-
-
-
 const data = [];
-
 for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     const startTime = cells[0].innerText;
@@ -87,18 +74,12 @@ for (let i = 0; i < rows.length; i++) {
     const rowData = new TableRow(startTime, endTime, adminName, playstationRoom, description, totalPrice);
     data.push(rowData);
 }
-
 var allOrdersBtn = document.getElementById("all-orders");
-
 const ApplyFilterBtn = document.getElementById("filter-by-date");
 const claerFilterBtn = document.getElementById("clear-filter");
-
-
-
 function filterBy(filterdArray) {
     // Clear the table body
     tbody.innerHTML = "";
-
     // Loop through the filtered data and create new rows and cells
     filterdArray.forEach(row => {
         const newRow = tbody.insertRow();
@@ -116,17 +97,13 @@ function filterBy(filterdArray) {
         totalPriceCell.innerText = row.totalPrice;
     });
 }
-
-
 const dateFromInput = document.getElementById("date-from");
 const dateToInput = document.getElementById("date-to");
 const AdminNameSelect = document.getElementById("select-admin");
 const RoomNameSelect = document.getElementById("select-room");
-
 // split the dateInput value in array of year , month , day ex : '18-04-2023' => ['18','04','2023']
 var dateInputValueAsArrayOfDate ;
 console.log(dateInputValueAsArrayOfDate);
-
 var pageNumberForFilteredOrdersPagination = localStorage.getItem("PageNumberForFilteredOrderes") != null ? localStorage.getItem("PageNumberForFilteredOrderes") : 1;
 var pageNumber;
 if (localStorage.getItem("ApplyOrdersFilter") == "true") {
@@ -138,7 +115,6 @@ if (localStorage.getItem("ApplyOrdersFilter") == "true") {
 //if (localStorage.getItem("adminNameForFilteredOrderes") != null) AdminNameSelect.value = localStorage.getItem("adminNameForFilteredOrderes");
 var filteredDataByDay;
 var paginationVM;
-
 async function handleApplyFilterBtnClick() {
 
     deleteLocalStorageAfetrApplyFilter();
@@ -175,9 +151,7 @@ async function handleApplyFilterBtnClick() {
         }
     });  
 }
-
 ApplyFilterBtn.addEventListener("click", handleApplyFilterBtnClick );
-
 //resert the filters
 claerFilterBtn.addEventListener("click", function () {
 
@@ -229,33 +203,22 @@ pageLinks.forEach(function (pageLink) {
         var fromNextOrPervious;
         pageNumber = pageLink.innerHTML;
         pageNumberForFilteredOrdersPagination = pageLink.innerHTML;
-
-        console.log(pageLink);
         var parentLi = this.parentNode;
-        var activeLi = document.querySelector('.page-item.active');
-   
+        var activeLi = document.querySelector('.page-item.active');  
         if (parentLi === nextLi) {
             console.log(activeLi.nextElementSibling.firstElementChild);
             var nextElement = activeLi.nextElementSibling.firstElementChild;
             fromNextOrPervious = 1;
             nextElement.click();
-            
-
+           
         }
         else if (parentLi === previousLi) {
-            console.log(activeLi.previousElementSibling.firstElementChild);
-
-
             activeLi.previousElementSibling.firstElementChild.click();
             fromNextOrPervious = 1;
-
         }
         if (activeLi)
-        {
-            console.log("active", activeLi);
-               
+        {               
             activeLi.classList.remove('active');
-
             if (parentLi.childNodes[0].innerHTML != 1)
             {
                 if (parentLi === beforeLastLi)
@@ -267,39 +230,26 @@ pageLinks.forEach(function (pageLink) {
                 {
                     nextLi.classList.remove('disabled');
                     console.log("NOT beforelast", parentLi);
-
-
                 }
-                console.log("prev");
                 previousLi.classList.remove('disabled');
-                console.log(previousLi);
             }
             else
             {
                 previousLi.classList.add('disabled');
                 nextLi.classList.remove('disabled');
-
             }
         }
         if (parentLi != nextLi && parentLi != previousLi) {
-            console.log(parentLi);
-            console.log("page link text",pageLink.innerText);
-
             parentLi.classList.add('active');
             // save the current active li to retrive the active page link when the page is reloaded
             localStorage.setItem("active List", `${pageLink.innerText}`);
         }
-
         if (localStorage.getItem("ApplyOrdersFilter") == "true")
         {
-            console.log("filtered pagination");
             ApplyFilterBtn.click();
         } else {
             window.location.href = `http://localhost:5000/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
             //window.location.href = `http://localhost:5208/Order/getOrdersPagination/?page=${pageNumber}&size=10`;
-        }
-
-
-        
+        }      
     });
 });

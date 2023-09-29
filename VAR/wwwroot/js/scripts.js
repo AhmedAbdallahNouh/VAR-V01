@@ -7,12 +7,21 @@
 // Scripts
 //
 
+var toastAudio = document.querySelector("audio");
+var playButton = document.querySelector("#playButton");
+playButton.innerHTML = "sdsdsa";
+
 function checkToastPlaystationRooms() {
-    if (localStorage.getItem('toastPlaystationRooms') != null) {
-        var toastPlaystaionRooms = JSON.parse(localStorage.getItem('toastPlaystationRooms'));
+    var toastPlaystaionRooms = JSON.parse(localStorage.getItem('toastPlaystationRooms'));
+    if (toastPlaystaionRooms !== null && toastPlaystaionRooms.length !== 0) {
+        console.log("hello");
+    //if (localStorage.getItem('toastPlaystationRooms') != null) {
+        //var toastPlaystaionRooms = JSON.parse(localStorage.getItem('toastPlaystationRooms'));
         for (let i = 0; i < toastPlaystaionRooms.length; i++) {
             showToastr(toastPlaystaionRooms[i].name);
         }
+        playButton.click();
+        toastAudio.play();
     }
 }
 
